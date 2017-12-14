@@ -17,3 +17,5 @@ except:
 if obj.get('response') != None:
 	print('Server answer:')
 	pprint.pprint(obj)
+else:
+	print('Server returned error...')
