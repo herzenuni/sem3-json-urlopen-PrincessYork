@@ -1,21 +1,23 @@
-from urllib.request import urlopen
-import json
-import pprint
+import requests
+from pprint import pprint
 
-print('vk.com id :')
-id = input()
 
-request = "https://api.vk.com/method/users.get?user_ids={id}&fields=nickname,sex,city,site&v=5.69".format(id = id)
-print('Generated request :', request)
+def get_vk_user(user_id, fields):
 
-try:
-	answer_json = urlopen(request)
-	obj = json.loads(answer_json.read())
-except:
-	print('Server connection error. Check your connection')
+    req = "https://api.vk.com/method/users.get?user_ids={}&fields={}&v=5.69".format(user_id, fields)
+    print('Generated request :', req)
 
-if obj.get('response') != None:
-	print('Server answer:')
-	pprint.pprint(obj)
-else:
-	print('Server returned error...')
+    try:
+        answer = requests.get(req)
+    except requests.ConnectionError:
+        print("Server connection error. Check your internet connection...")
+    except Exception as exc:
+        print(str(exc.__class__), " exception cached...")
+
+    return answer.json()
+
+
+if __name__ == "__main__":
+    user_id = input("vk id : ")
+    fields = input("fields : ")
+    pprint(get_vk_user(user_id, fields))
