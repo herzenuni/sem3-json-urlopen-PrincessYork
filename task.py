@@ -4,6 +4,12 @@ from pprint import pprint
 
 def get_vk_user(user_id, fields):
 
+    """
+    :param user_id: integer number
+    :param fields: string like "field1, field2"
+    :return: json
+    """
+
     req = "https://api.vk.com/method/users.get?user_ids={}&fields={}&v=5.69".format(user_id, fields)
     print('Generated request :', req)
 
